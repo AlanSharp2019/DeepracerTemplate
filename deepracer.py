@@ -34,8 +34,11 @@ def reward_function(params):
     # Values for race conditions
     failure = 1e-3
 
+    # Handle basic failure conditions
+    if is_crashed:
+        return float(failure)
     
-
+    
     # Calculate 3 markers that are increasingly further away from the center line
     marker_1 = 0.1 * track_width    # One tenth width of track
     marker_2 = 0.25 * track_width   # Quater width of track
