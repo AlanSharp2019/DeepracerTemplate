@@ -1,7 +1,7 @@
 def reward_function(params):
 
     # Parameters related to the agent
-    all_wheels_on_track = params['all_wheels_on_track'     # flag to indicate if the agent is on the track
+    all_wheels_on_track = params['all_wheels_on_track']    # flag to indicate if the agent is on the track
     x_coord = params['x']                                  # agent's x-coordinate in meters
     y_coord = params['y']                                  # agent's y-coordinate in meters
     distance_from_center = params['distance_from_center']  # distance in meters from the track center 
@@ -31,14 +31,15 @@ def reward_function(params):
     waypoints = params['waypoints']                      # list of (x,y) as milestones along the track center
     closest_waypoints = params['closest_waypoints']      # indices of the two nearest waypoints.
 
+    # Values for race conditions
+    failure = 1e-3
 
-
-  
+    
 
     # Calculate 3 markers that are increasingly further away from the center line
-    marker_1 = 0.1 * track_width
-    marker_2 = 0.25 * track_width
-    marker_3 = 0.5 * track_width
+    marker_1 = 0.1 * track_width    # One tenth width of track
+    marker_2 = 0.25 * track_width   # Quater width of track
+    marker_3 = 0.5 * track_width    # Half width of track
 
     # Give higher reward if the car is closer to center line and vice versa
     if distance_from_center <= marker_1:
@@ -48,6 +49,6 @@ def reward_function(params):
     elif distance_from_center <= marker_3:
         reward = 0.1
     else:
-        reward = 1e-3  # likely crashed/ close to off track
+        return float(failure)  # likely crashed/ close to off track
 
-    return reward
+    return float(reward)
